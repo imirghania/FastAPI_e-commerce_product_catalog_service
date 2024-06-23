@@ -3,6 +3,7 @@
 name = "fastapi-pcatalog"
 version = "0.1.0"
 description = ""
+license = "MIT"
 authors = ["ahmedidris1 <ahmeditmo1@gmail.com>"]
 readme = "README.md"
 
@@ -16,6 +17,7 @@ httpx = "^0.27.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.2.2"
+
 
 [build-system]
 requires = ["poetry-core"]
