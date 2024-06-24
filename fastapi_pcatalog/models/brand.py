@@ -1,7 +1,6 @@
-import datetime as dt
 from datetime import datetime, timezone
 from typing import Optional, Annotated
-from beanie import Document, Link, Indexed
+from beanie import Document, PydanticObjectId, Indexed
 from pydantic import Field, ConfigDict, BaseModel
 
 
@@ -40,6 +39,10 @@ class Brand(Document, BrandBase):
                     }
         }
     )
+
+
+class BrandOut(Brand):
+    id: PydanticObjectId
 
 
 class BrandUpdate(BrandBase):

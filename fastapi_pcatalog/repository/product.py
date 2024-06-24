@@ -1,5 +1,4 @@
 from datetime import datetime, timezone
-from typing import Counter
 from fastapi import HTTPException, status
 from fastapi_pcatalog.models.product import ProductIn, Product, ProductUpdate, ProductVariant
 from fastapi_pcatalog.models.category import Category

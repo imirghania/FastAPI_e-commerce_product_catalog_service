@@ -8,7 +8,10 @@ from fastapi_pcatalog.models.product import Product
 class BrandRepo:
 
     async def create(brand_in: BrandBase) -> Brand:
-        ...
+        new_brand = Brand(**brand_in.model_dump())
+        await new_brand.insert()
+        await new_brand.sync()
+        return new_brand
     
     
     async def get_one(id: str) -> Brand:

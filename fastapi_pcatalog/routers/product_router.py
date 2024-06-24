@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 from fastapi_pcatalog.models.product import (
     ProductIn, Product, ProductUpdate, ProductVariant)
 from fastapi_pcatalog.models.variant import VariantBase, VariantUpdate
@@ -14,7 +14,7 @@ async def get_all_products() -> list[Product]:
     return categories
 
 
-@router.post("/", tags=["product"])
+@router.post("/", tags=["product"], status_code=status.HTTP_201_CREATED)
 async def create_product(cat: ProductIn) -> Product:
     new_category = await ProductRepo.create(cat)
     return new_category
@@ -32,10 +32,9 @@ async def update_product(id: str, update_payload: ProductUpdate) -> Product:
     return cat
 
 
-@router.delete("/{id}", tags=["product"])
-async def delete_product(id: str) -> dict:
-    msg = await ProductRepo.delete(id)
-    return msg
+@router.delete("/{id}", tags=["product"], status_code=status.HTTP_204_NO_CONTENT)
+async def delete_product(id: str):
+    await ProductRepo.delete(id)
 
 
 # ********************** Variants endpoints **********************
@@ -46,7 +45,7 @@ async def get_variant(prod_id: str, variant_id: str) -> ProductVariant:
     return variant
 
 
-@router.post("/{id}/variant", tags=["variant"])
+@router.post("/{id}/variant", tags=["variant"], status_code=status.HTTP_201_CREATED)
 async def create_variant(id: str, variant_payload: VariantBase) -> ProductVariant:
     prod_variant = await ProductRepo.create_variant(id, variant_payload)
     return prod_variant
@@ -58,7 +57,7 @@ async def update_variant(prod_id: str, var_id: str, variant_payload: VariantUpda
     return prod_variant
 
 
-@router.delete("/{prod_id}/variant/{var_id}", tags=["variant"])
-async def delete_variant(prod_id: str, var_id: str) -> Product:
-    msg = await ProductRepo.delete_variant(prod_id, var_id)
-    return msg
+@router.delete("/{prod_id}/variant/{var_id}", tags=["variant"], 
+            status_code=status.HTTP_204_NO_CONTENT)
+async def delete_variant(prod_id: str, var_id: str) :
+    await ProductRepo.delete_variant(prod_id, var_id)
